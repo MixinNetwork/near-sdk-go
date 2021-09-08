@@ -1,4 +1,4 @@
-module github.com/MixinNetwork/near-go
+module github.com/MixinNetwork/near-sdk-go
 
 go 1.15
 

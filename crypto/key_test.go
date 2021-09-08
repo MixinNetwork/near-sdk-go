@@ -11,7 +11,8 @@ func TestKeyGenerateKey(t *testing.T) {
 	assert := assert.New(t)
 	address, private, err := GenerateKey()
 	assert.Nil(err)
-	fmt.Println(address)
 	fmt.Println(private)
-	fmt.Println(err)
+	a, err := NormalizePublicKey(address)
+	assert.Nil(err)
+	fmt.Println(a)
 }

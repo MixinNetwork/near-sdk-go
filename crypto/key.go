@@ -12,14 +12,14 @@ func NormalizePublicKey(address string) (string, error) {
 	address = strings.TrimSpace(address)
 	addr, err := hex.DecodeString(address)
 	if err != nil {
-		return "", fmt.Errorf("Near invalid address %s", address)
+		return "", fmt.Errorf("near invalid address %s", address)
 	}
 	if len(addr) != ed25519.PublicKeySize {
-		return "", fmt.Errorf("Near invalid address %s", address)
+		return "", fmt.Errorf("near invalid address %s", address)
 	}
 	a := hex.EncodeToString(addr)
 	if a != address {
-		return "", fmt.Errorf("Near invalid address %s", address)
+		return "", fmt.Errorf("near invalid address %s", address)
 	}
 	return a, nil
 }
@@ -29,7 +29,7 @@ func GenerateKey() (string, string, error) {
 	if err != nil {
 		return "", "", err
 	}
-	private := hex.EncodeToString(priv.Seed())
 	address := hex.EncodeToString(pub)
+	private := hex.EncodeToString(priv.Seed())
 	return address, private, nil
 }
