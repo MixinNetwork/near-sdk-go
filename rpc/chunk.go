@@ -40,9 +40,9 @@ type Chunk struct {
 	Receipts     []interface{} `json:"receipts"`
 	Transactions []struct {
 		Actions []struct {
-			Transfer struct {
+			Transfer *struct {
 				Deposit string `json:"deposit"`
-			} `json:"Transfer"`
+			} `json:"Transfer,omitempty"`
 		} `json:"actions"`
 		Hash       string `json:"hash"`
 		Nonce      int    `json:"nonce"`
