@@ -1,6 +1,6 @@
 package rpc
 
-func (c *Client) getGasPrice(blockId string) (string, error) {
+func (c *Client) GetGasPrice(blockId string) (string, error) {
 	var res struct {
 		GeneralResponse
 		Result struct {
