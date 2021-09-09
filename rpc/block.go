@@ -1,9 +1,5 @@
 package rpc
 
-import (
-	"errors"
-)
-
 func (c *Client) GetHeight() (int64, error) {
 	var res struct {
 		GeneralResponse
@@ -19,15 +15,22 @@ func (c *Client) GetHeight() (int64, error) {
 	return res.Result.Header.Height, nil
 }
 
-func (c *Client) GetBlock(id interface{}) (*BlockResult, error) {
-	switch id.(type) {
-	case string:
-		break
-	case int64:
-		break
-	default:
-		return nil, errors.New("bad param type")
+func (c *Client) GetBlockByNumber(id int64) (*BlockResult, error) {
+	var res struct {
+		GeneralResponse
+		Result BlockResult `json:"result"`
 	}
+	err := c.request("block", map[string]interface{}{"block_id": id}, &res)
+	if err != nil {
+		return nil, err
+	}
+	if res.Error != nil {
+		return nil, res.Error
+	}
+	return &res.Result, nil
+}
+
+func (c *Client) GetBlock(id string) (*BlockResult, error) {
 	var res struct {
 		GeneralResponse
 		Result BlockResult `json:"result"`

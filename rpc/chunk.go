@@ -1,11 +1,11 @@
 package rpc
 
-func (c *Client) getChunk(chunkHashs []string) (*Chunk, error) {
+func (c *Client) GetChunk(chunkHash string) (*Chunk, error) {
 	var res struct {
 		GeneralResponse
 		Result Chunk `json:"result"`
 	}
-	err := c.request("chunk", chunkHashs, &res)
+	err := c.request("chunk", map[string]interface{}{"chunk_id": chunkHash}, &res)
 	if err != nil {
 		return nil, err
 	}
