@@ -14,6 +14,20 @@ func (c *Client) GetTx(transactionHash, senderId string) (*TransactionResult, er
 	}
 	return &res.Result, nil
 }
+func (c *Client) BroadcastTxCommit(raw string) (string, error) {
+	var res struct {
+		GeneralResponse
+		Result string `json:"result"`
+	}
+	err := c.request("broadcast_tx_commit", []string{raw}, &res)
+	if err != nil {
+		return "", err
+	}
+	if res.Error != nil {
+		return "", res.Error
+	}
+	return res.Result, nil
+}
 
 func (c *Client) BroadcastTxAsync(raw string) (string, error) {
 	var res struct {
@@ -50,7 +64,10 @@ type TransactionResult struct {
 		} `json:"proof"`
 	} `json:"receipts_outcome"`
 	Status struct {
-		SuccessValue string `json:"SuccessValue"`
+		SuccessValue     string `json:"SuccessValue,omitempty"`
+		SuccessReceiptId string `json:"SuccessReceiptId,omitempty"`
+		Failure          string `json:"Failure,omitempty"`
+		Unknown          string `json:"Unknown,omitempty"`
 	} `json:"status"`
 	Transaction struct {
 		Actions []struct {
